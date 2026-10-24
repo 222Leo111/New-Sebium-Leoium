@@ -59,7 +59,7 @@
 </script>
 
 
-<title>Rec Room Revival (iMac v5)</title>
+<title>Rec Room Revival (v8)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -719,20 +719,10 @@ makeLabel(0.8,1.1,function(c,w,h){c.fillStyle='#264057';c.fillRect(0,0,w,h);for(
 box(9.55,0,17.2,0.7,0.72,0.06,0x8a5a36,{collide:false});
 box(9.6,0,18.62,0.6,0.72,0.7,0x8a5a36);[0.18,0.38,0.58].forEach(function(y){box(9.28,y,18.62,0.02,0.16,0.56,0x6b4a34,{collide:false});box(9.27,y+0.06,18.62,0.02,0.03,0.14,0xd9c26a,{collide:false})});
 box(9.45,0.72,18.0,0.72,0.05,1.8,0xa0693d,{collide:false});box(9.45,0.0,17.2,0.62,0.72,0.05,0x8a5a36,{collide:true});
-/* iMac G3 (Bondi blue) built from simple primitives with the game's own box()/lambert() - no model file, no extra shaders. Screen faces the chair (-x). */
-(function(){
-  var BL=0x1fa5c4,GR=0xe8f4f8,N={collide:false};
-  box(9.56,0.77,18.0,0.2,0.02,0.22,GR,N);                       /* foot */
-  var egg=new THREE.Mesh(new THREE.SphereGeometry(0.5,14,10),lambert(BL));egg.scale.set(0.42,0.36,0.38);egg.position.set(9.55,0.98,18.0);scene.add(egg); /* egg-shaped back */
-  box(9.35,0.79,18.0,0.06,0.37,0.39,BL,N);                      /* front bezel */
-  box(9.322,0.835,18.0,0.008,0.27,0.33,0x14202a,N);             /* screen frame */
-  makeLabel(1.2,0.88,function(c,w,h){c.fillStyle='#0d2233';c.fillRect(0,0,w,h);txt(c,'REC ROOM',w/2,h*.3,h*.26,'#ffb02e');txt(c,'REVIVAL',w/2,h*.56,h*.26,'#3ddc97');txt(c,save.tokens+' tokens',w/2,h*.84,h*.16,'#9db3c2',500)},[9.316,0.98,18.0],-Math.PI/2);
-  var lb=scene.children[scene.children.length-1];lb.scale.set(0.24,0.24,1);   /* shrink the 1.2x0.88 label to a 0.29x0.21 screen (sharper text) */
-  box(9.318,0.795,18.0,0.012,0.03,0.12,GR,N);                   /* chin */
-  box(9.17,0.77,18.0,0.14,0.02,0.40,0x8fd3e0,N);                /* keyboard */
-  box(9.17,0.79,18.0,0.11,0.008,0.34,0xffffff,N);               /* keys */
-  box(9.2,0.77,18.3,0.06,0.025,0.05,BL,N);                      /* mouse */
-})();
+box(9.8,0.77,18.0,0.2,0.04,0.26,0x2a3340,{collide:false});box(9.84,0.8,18.0,0.04,0.12,0.06,0x2a3340,{collide:false});
+box(9.82,0.9,18.0,0.05,0.5,0.82,0x111820,{collide:false});
+makeLabel(0.74,0.42,function(c,w,h){c.fillStyle='#0d2233';c.fillRect(0,0,w,h);txt(c,'REC ROOM',w/2,h*.3,h*.26,'#ffb02e');txt(c,'REVIVAL',w/2,h*.56,h*.26,'#3ddc97');txt(c,save.tokens+' tokens',w/2,h*.84,h*.16,'#9db3c2',500)},[9.79,1.15,18.0],-Math.PI/2);
+box(9.2,0.77,18.0,0.16,0.02,0.5,0xe8e8ee,{collide:false});box(9.2,0.77,18.55,0.06,0.03,0.1,0xe8e8ee,{collide:false});
 var mug=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.04,0.09,10),lambert(0xff6b4a));mug.position.set(9.3,0.82,17.4);scene.add(mug);
 interactables.push({x:9.0,z:18.0,r:2.4,name:'Check the monitor',act:function(){toast('Inbox empty. Everyone is at the Rec Center.');sfx(660,.08,'sine',.05)}});
 /* office chair */
@@ -1113,7 +1103,8 @@ function makeAvatar(lk,tgt){
   function shapeF(geo,mat,x,dy,sz,rz){fe(geo,mat,x,dy,sz,sz,1,rz||0,0.006)}
   if(!(lk.acc===2)){
     var S=[-1,1],ex=0.085;
-    switch(lk.face){
+    switch(window.__oldFace?-1:lk.face){
+      case -1:S.forEach(function(s){fe(SPH,dk,s*ex,-0.07,0.032,0.034,0.012,0)});fe(SPH,dk,0,-0.125,0.052,0.03,0.014,0,0.004);break;
       case 0:S.forEach(function(s){dot(s*ex,-0.01,0.021)});smileArc(-0.045,0.055,0.011);break;
       case 1:S.forEach(function(s){bigEye(s*ex,-0.005,0.028)});openMouth(-0.085,0.05,0.04,true);break;
       case 2:S.forEach(function(s){lineEye(s*ex,-0.012,0.065,0)});smileArc(-0.06,0.035,0.009);break;
@@ -1558,7 +1549,8 @@ if(verNew){var vt=document.querySelector('#watch .tip');if(vt)vt.textContent='Wa
 var QT=[[REC.ox-10.5,REC.oz-22.5],[REC.ox+4.5,REC.oz-8],[REC.ox-17,REC.oz-14],[REC.ox-1.5,REC.oz+5.5],[REC.ox-7.2,REC.oz-28]];
 if(!save.quest||typeof save.quest.s!=='number'||!Array.isArray(save.quest.got))save.quest={s:0,got:[]};
 var Q=save.quest,qCoins=[];
-var pip=makeAvatar({skin:3,top:3,shirt:3,bottom:0,pants:1,hair:1,hairc:0,hat:1,hatc:7,face:1,acc:0,accc:2});
+window.__oldFace=true;var pip=makeAvatar({skin:3,top:3,shirt:3,bottom:0,pants:1,hair:1,hairc:0,hat:1,hatc:7,face:1,acc:0,accc:2});window.__oldFace=false;
+/* Coach Pip's original look: black oval eyes + mouth, dark cap, gold shirt, white stripe and cuffs */
 var PX=REC.ox-4.2,PZ=REC.oz-4.9;pip.g.position.set(PX-REC.ox,.3,PZ-REC.oz);pip.g.rotation.y=Math.atan2(-(REC.ox-6.2-PX),-(REC.oz-3.4-PZ));REC.grp.add(pip.g);setNameplate(pip,'Coach Pip');
 colliders.push({minX:PX-.35,maxX:PX+.35,minZ:PZ-.35,maxZ:PZ+.35,minY:-1,maxY:3});
 var qMk=mk(128),qTex=new THREE.CanvasTexture(qMk),qSp=new THREE.Sprite(new THREE.SpriteMaterial({map:qTex,transparent:true,depthWrite:false}));
@@ -1939,7 +1931,7 @@ function drawMap(){
   mc.fillStyle=TC.mapBg;mc.fillRect(0,0,116,148);
   function R(x,z,w,d,col){mc.fillStyle=col;mc.fillRect(mxp(x),mzp(z),w*MS,d*MS)}
   if(P.z>REC.z0){if(REC.mapCv){mc.imageSmoothingEnabled=false;mc.drawImage(REC.mapCv,mxp(REC.ox+REC.gx0),mzp(REC.oz+REC.gz0),REC.gnx*REC.gcs*MS,REC.gnz*REC.gcs*MS)}}
-  else{R(-42,-14,28,22,'#3a7a48');R(-30,1.5,4,4,'#4fb4e8');R(-26.5,2.2,12,2.6,'#cfc8b8');R(-14,-61,28,46.8,'#2d5a3a');R(14.3,-14,28.7,22,'#5b3a24');R(14.3,8.3,28.7,22.2,'#c9ad6a');if(P.z>8.3){R(-1.6,8,3.2,22.2,'#34526b');R(1.7,14,8.4,8,'#3a5b77')}}
+  else{R(-42,-14,28,22,'#3a7a48');R(-30,1.5,4,4,'#4fb4e8');R(-26.5,2.2,12,2.6,'#cfc8b8');R(-14,-61,28,46.8,'#2d5a3a');R(14.3,-14,28.7,22,'#5b3a24');R(14.3,8.3,28.7,22.2,'#c9ad6a');if(P.z>8.3){R(1.7,14,8.4,8,'#3a5b77')}}
   mc.fillStyle='#ff6b4a';mc.fillRect(mxp(HOOP.x)-1,mzp(HOOP.z)-3,3,6);
   Object.keys(remotes).forEach(function(k){var r=remotes[k];mc.fillStyle=hexCss(SHIRTS[r.look.shirt]);mc.beginPath();mc.arc(mxp(r.av.g.position.x),mzp(r.av.g.position.z),3.5,0,7);mc.fill()});
   BASK.forEach(function(b,i){mc.fillStyle=i===(L.s===1?L.h:-1)?'#3ddc97':'#8a96a0';mc.fillRect(mxp(b[0])-2,mzp(b[1])-2,4,4)});
@@ -1960,7 +1952,7 @@ function drawBig(){
   function R(x,z,w,d,col,lab){bx.fillStyle=col;bx.fillRect(px(x),pz(z),w*sc,d*sc);if(lab){bx.fillStyle='#fff';bx.font='700 '+Math.max(11,sc*.9)+'px sans-serif';bx.textAlign='center';bx.fillText(lab,px(x+w/2),pz(z)+Math.max(16,sc*1.5))}}
   if(REC.mapCv){bx.imageSmoothingEnabled=false;bx.drawImage(REC.mapCv,px(REC.ox+REC.gx0),pz(REC.oz+REC.gz0),REC.gnx*REC.gcs*sc,REC.gnz*REC.gcs*sc);bx.fillStyle='#fff';bx.font='700 '+Math.max(11,sc*.9)+'px sans-serif';bx.textAlign='center';bx.fillText('REC CENTER',px(REC.ox-10),pz(REC.oz-39))}
   R(-42,-14,28,22,'#3a7a48','THE QUAD');R(-30,1.5,4,4,'#4fb4e8');R(-26.5,2.2,12,2.6,'#cfc8b8');
-  R(-14,-61,28,46.8,'#2d5a3a','DISCGOLF');R(14.3,-14,28.7,22,'#5b3a24','DODGEBALL');R(14.3,8.3,28.7,22.2,'#c9ad6a','ISLE OF SKULLS');R(-1.6,8,3.2,22.2,'#34526b');R(1.7,14,8.4,8,'#3a5b77','DORM 104');
+  R(-14,-61,28,46.8,'#2d5a3a','DISCGOLF');R(14.3,-14,28.7,22,'#5b3a24','DODGEBALL');R(14.3,8.3,28.7,22.2,'#c9ad6a','ISLE OF SKULLS');R(1.7,14,8.4,8,'#3a5b77','DORM 104');
   bx.fillStyle='#ff6b4a';bx.beginPath();bx.arc(px(HOOP.x),pz(HOOP.z),sc*.9,0,7);bx.fill();
   TEES.forEach(function(t){bx.fillStyle='#59636e';bx.fillRect(px(t[0])-sc*.5,pz(t[1])-sc*.5,sc,sc)});
   BASK.forEach(function(b,i){var on=i===(L.s===1?L.h:-1);bx.fillStyle=on?'#3ddc97':'#8a96a0';bx.beginPath();bx.arc(px(b[0]),pz(b[1]),sc*.6,0,7);bx.fill();bx.fillStyle='#0b141c';bx.font='700 '+Math.max(10,sc*.8)+'px sans-serif';bx.textAlign='center';bx.fillText(i+1,px(b[0]),pz(b[1])+sc*.3)});
